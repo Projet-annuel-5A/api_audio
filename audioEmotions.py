@@ -12,12 +12,29 @@ import torch.nn.functional as f
 
 class AudioEmotions:
     def __init__(self, session_id: int, interview_id: int) -> None:
+        """
+        Initializes the AudioEmotions instance with specific session and interview IDs,
+        sets up utilities and loads environment configurations.
+
+        Parameters:
+            session_id (int): The session ID to be used throughout this instance.
+            interview_id (int): The interview ID to be used for processing.
+        """
         # Load environment variables from .env file
         load_dotenv()
         self.utils = Utils(session_id, interview_id)
         self.models = Models()
 
     def split_and_predict(self, segments: pd.DataFrame) -> List[Dict[str, float]]:
+        """
+        Splits the audio file into segments and predicts emotions for each segment using a deep learning model.
+        Parameters:
+            segments (pd.DataFrame): DataFrame containing the start and end times of audio segments.
+        Returns:
+            List[Dict[str, float]]: A list of dictionaries with emotion labels and their respective scores.
+        Raises:
+            Exception: If an error occurs during prediction, logs and raises an exception.
+        """
         sentiments = list()
 
         try:
