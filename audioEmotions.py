@@ -47,7 +47,7 @@ class AudioEmotions:
             for row in segments.itertuples():
                 audio_segment = audio[row.start:row.end]
                 audio_segment_bytes = io.BytesIO()
-                audio_segment.export(audio_segment_bytes, format="mp3")
+                audio_segment.export(audio_segment_bytes, format="wav")
                 audio_segment_bytes.seek(0)
 
                 speech_array, sample_rate = torchaudio.load(audio_segment_bytes)
