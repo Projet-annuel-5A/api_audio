@@ -2,7 +2,7 @@
 FROM python:3.11.9-slim as builder
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential wget && \
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential wget && apt-get install ffmpeg libsm6 libxext6 -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Install CUDA repository keyring and CUDA toolkit
@@ -19,6 +19,12 @@ RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://
 # Stage 2: Final stage
 FROM python:3.11.9-slim
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy only the necessary files from the builder stage
 COPY --from=builder /usr/local /usr/local
 
@@ -32,5 +38,5 @@ COPY . .
 # ENTRYPOINT ["python3"]
 
 # Commands to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]
 EXPOSE 8001
