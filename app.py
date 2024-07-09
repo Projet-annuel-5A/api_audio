@@ -43,14 +43,5 @@ async def process_audio(session_id: int, interview_id: int):
         ate.utils.__del__()
 
 
-@app.get("/testConfig")
-def test_config():
-    """
-    Endpoint for testing the device where the models where loaded.
-    Response: JSON object showing the model ID and the device (CPU or GPU) it is loaded on.
-    """
-    return {"Model '{}' loaded in".format(models.ate_model_id): models.device}
-
-
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001, reload=True)

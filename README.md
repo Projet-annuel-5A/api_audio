@@ -42,13 +42,6 @@ Raises:
     HTTPException: An exception with status code 500 if processing fails.
 """
 ```
-```fastAPI
-@app.post("/testConfig")
-"""
-Endpoint for testing the device where the models where loaded.
-Response: JSON object showing the model ID and the device (CPU or GPU) it is loaded on.
-"""
-```
 
 ### AudioEmotions (audioEmotions.py):
 Handles the extraction of audio segments from storage and predicts emotions using pre-trained models.
